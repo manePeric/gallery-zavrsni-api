@@ -31,7 +31,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function getMyGallery()
+    public function getActiveUser()
     {
         $activeUser = Auth::user();
         return response()->json($activeUser);

@@ -11,7 +11,7 @@ class Gallery extends Model
 
     protected $fillable = ["title", "description"];
 
-    public function searchByTitle($query, $title = "")
+    public static function scopeSearchByTitle($query, $title = "")
     {
         if (!$title) {
             return $query;

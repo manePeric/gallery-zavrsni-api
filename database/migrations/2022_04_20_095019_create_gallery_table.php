@@ -15,9 +15,12 @@ return new class extends Migration {
         Schema::create("gallery", function (Blueprint $table) {
             $table->id();
             $table->string("title");
-            $table->string("description");
-            $table->foreignId("gallery_image_id");
-            $table->foreignId("user_id");
+            $table->text("description");
+            $table
+                ->foreignId("user_id")
+                ->constrained()
+                ->onDelete("cascade")
+                ->onUpdate("cascade");
             $table->timestamps();
         });
     }
