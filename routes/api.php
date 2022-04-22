@@ -20,14 +20,11 @@ Route::middleware("auth:sanctum")->get("/user", function (Request $request) {
 });
 
 Route::get("/galleries", [GalleryController::class, "index"]);
-Route::get("galleries/{gallery}", [GalleryController::class, "show"]);
-Route::post("/create", [GalleryController::class, "store"])->middleware("auth");
-Route::put("galleries/{gallery}", [GalleryController::class, "update"]);
-Route::delete("/galleries/{gallery}", [GalleryController::class, "destroy"]);
+Route::get("/galleries/{id}", [GalleryController::class, "show"]);
 
-Route::post("login", [AuthController::class, "login"]);
-Route::post("register", [AuthController::class, "register"]);
-Route::get("my-gallery", [AuthController::class, "getActiveUser"])->middleware(
+Route::post("/login", [AuthController::class, "login"]);
+Route::post("/register", [AuthController::class, "register"]);
+Route::get("/my-gallery", [AuthController::class, "getActiveUser"])->middleware(
     "auth"
 );
-Route::post("logout", [AuthController::class, "logout"])->middleware("auth");
+Route::post("/logout", [AuthController::class, "logout"])->middleware("auth");

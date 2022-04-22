@@ -9,19 +9,43 @@ class Gallery extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["title", "description"];
+    protected $fillable = ["user_id", "title", "description"];
 
-    public static function scopeSearchByTitle($query, $title = "")
+    public function images()
     {
-        if (!$title) {
+        return $this->hasMany(Image::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMane(Comment::class);
+    }
+
+    public function scopeSearchByTerm($query, $term = "", $userId = "")
+    {
+        $query->with("user", "images");
+
+        if ($userId) {
+            $query = $query->where("user_id", "=", $userId);
+        }
+
+        if (!$term && !$userId) {
             return $query;
         }
 
-        return $query->where("title", "like", "%{title}%");
-    }
-
-    public function galleryImages()
-    {
-        return $this->hasMany(GalleryImage::class);
+        return $query->where(function ($querry2) use ($term) {
+            $querry2
+                ->where("title", "like", "%{$term}%")
+                ->orWhere("description", "like", "%{$term}%")
+                ->orWhereHas("user", function ($querry3) use ($term) {
+                    $querry3
+                        ->where("first_name", "like", "%{$term}%")
+                        ->orWhere("last_name", "like", "$%{$term}%");
+                });
+        });
     }
 }

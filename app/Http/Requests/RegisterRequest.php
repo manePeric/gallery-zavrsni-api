@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Password;
 
 class RegisterRequest extends FormRequest
 {
@@ -29,7 +28,7 @@ class RegisterRequest extends FormRequest
             "lastName" => "required|string|max:255",
             "email" => "required|email|unique:users",
             "password" => "required|string|min:8|confirmed",
-            "checkbox" => "accepted",
+            "terms" => "accepted",
         ];
     }
 }
