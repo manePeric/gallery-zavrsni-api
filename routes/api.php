@@ -21,10 +21,14 @@ Route::middleware("auth:sanctum")->get("/user", function (Request $request) {
 
 Route::get("/galleries", [GalleryController::class, "index"]);
 Route::get("/galleries/{id}", [GalleryController::class, "show"]);
+Route::post("/galleries", [GalleryController::class, "store"]);
 
 Route::post("/login", [AuthController::class, "login"]);
 Route::post("/register", [AuthController::class, "register"]);
 Route::get("/my-gallery", [AuthController::class, "getActiveUser"])->middleware(
-    "auth"
+    "auth:api"
 );
-Route::post("/logout", [AuthController::class, "logout"])->middleware("auth");
+
+Route::post("/logout", [AuthController::class, "logout"])->middleware(
+    "auth:api"
+);
