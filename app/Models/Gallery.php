@@ -22,7 +22,7 @@ class Gallery extends Model
 
     public function comments()
     {
-        return $this->hasMane(Comment::class);
+        return $this->hasMany(Comment::class);
     }
 
     public function scopeSearchByTerm($query, $term = "", $userId = "")
